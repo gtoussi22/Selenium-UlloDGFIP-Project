@@ -10,6 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import pageObjectsUlloDGFIP.AuthentificationUser;
+
 import java.time.Duration;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
@@ -53,6 +55,24 @@ public void test002_accessTheSpecificSiteArea1() throws InterruptedException {
     
     // Vérifier que la navigation a fonctionné
     Assertions.assertTrue(driver.getCurrentUrl().contains("accueil"));
+}
+
+@Test
+public void test003_AuthentificationUser() throws InterruptedException {
+    AuthentificationUser objAuthentificationUser = new AuthentificationUser(driver);
+    
+    System.out.println("Avant clic - URL: " + driver.getCurrentUrl());
+    
+    // Cliquer sur "Se connecter"
+    objAuthentificationUser.clickSeConnecter();
+    
+    // Attendre 3 secondes
+    Thread.sleep(3000);
+    
+    System.out.println("Après clic - URL: " + driver.getCurrentUrl());
+    
+    // Vérifier la navigation
+    Assertions.assertTrue(driver.getCurrentUrl().contains("login.jsp"));
 }
 
     @AfterAll
