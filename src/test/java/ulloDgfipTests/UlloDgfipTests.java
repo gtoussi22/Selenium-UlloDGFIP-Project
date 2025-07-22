@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import pageObjectsUlloDGFIP.ArticlesMediatheques;
 import pageObjectsUlloDGFIP.AuthentificationUser;
 //import pageObjectsUlloDGFIP.ConnexionUser;
 
@@ -137,6 +138,13 @@ public void test004_ConnexionManuelleEtSuite() throws InterruptedException {
         System.out.println(" Vous pouvez maintenant tester les fonctionnalités après connexion !");
     }
 }
+
+    @Test
+    public void test005_ArticlesEtMediatheques(){
+    ArticlesMediatheques objArticlesMediatheques = new ArticlesMediatheques(driver);
+    objArticlesMediatheques.ArticlesMediaUser();
+    } 
+
 
     @AfterAll
     public static void tearDown() {
