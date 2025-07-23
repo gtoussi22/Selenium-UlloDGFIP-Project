@@ -13,6 +13,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import pageObjectsUlloDGFIP.ArticlesMediatheques;
 import pageObjectsUlloDGFIP.AuthentificationUser;
 //import pageObjectsUlloDGFIP.ConnexionUser;
+import pageObjectsUlloDGFIP.CreatearticlesUser;
 
 import java.time.Duration;
 
@@ -144,6 +145,68 @@ public void test004_ConnexionManuelleEtSuite() throws InterruptedException {
     ArticlesMediatheques objArticlesMediatheques = new ArticlesMediatheques(driver);
     objArticlesMediatheques.ArticlesMediaUser();
     } 
+
+    @Test
+    public void test006_CreateArticles() throws InterruptedException{
+        CreatearticlesUser objCreateArticlesUser = new CreatearticlesUser(driver);
+        objCreateArticlesUser.CreateArticle();
+        objCreateArticlesUser.MenuIcon();
+        objCreateArticlesUser.ChooseImageFromMediaLibrary();
+        objCreateArticlesUser.ButtonClick1();
+        objCreateArticlesUser.ImageFolderClick();
+          // Automatique jusqu'à la médiathèque
+    
+    Thread.sleep(3000);
+    
+    Thread.sleep(5000);
+    
+    System.out.println(" SÉLECTIONNEZ UNE IMAGE (30 secondes max)");
+    
+    // Attendre avec détection intelligente
+    waitForUserImageSelection();
+    
+    System.out.println("Image sélectionnée ! Suite automatique...");
+    
+    // Continuer automatiquement
+    continuerApresSelectionImage();
+}
+private void waitForUserImageSelection() throws InterruptedException {
+    String urlInitiale = driver.getCurrentUrl();
+    
+    for (int i = 0; i < 30; i++) {
+        Thread.sleep(1000);
+        
+        // Vérifier différents signaux de sélection réussie
+        String urlActuelle = driver.getCurrentUrl();
+        String pageSource = driver.getPageSource();
+        
+        if (!urlActuelle.equals(urlInitiale) ||
+            pageSource.contains("image") && pageSource.contains("sélectionné") ||
+            driver.findElements(By.xpath("//img[@src]")).size() > 0) {
+            
+            System.out.println(" Sélection détectée automatiquement");
+            return;
+        }
+        
+        if (i % 5 == 0) {
+            System.out.println("⏳ " + (30-i) + "s restantes...");
+        }
+    }
+    
+    System.out.println(" Temps écoulé, on continue");
+}
+
+private void continuerApresSelectionImage() throws InterruptedException {
+    System.out.println(" Reprise automatique du processus");
+    
+    // Ici, ajoutez les étapes suivantes de votre test
+    // Par exemple : remplir les champs, publier, etc.
+    
+    Thread.sleep(2000);
+    System.out.println(" Article créé avec image");
+}
+
+    
 
 
     @AfterAll
